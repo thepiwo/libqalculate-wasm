@@ -8,7 +8,7 @@ ENV GMP_VERSION=6.3.0 \
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
-	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git xz-utils wget pkg-config \
+	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git xz-utils wget pkg-config python3 \
 	&& mkdir -p ~/opt/src
 
 RUN	cd ~ \
