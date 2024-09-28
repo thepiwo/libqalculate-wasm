@@ -67,5 +67,5 @@ COPY --from=builder /root/opt/lib /usr/local/lib
 COPY --from=builder /root/emsdk /root/emsdk
 
 RUN apt update \
-	&& apt install -y default-jre-headless python3 \
+	&& apt install -y default-jre-headless python3-minimal \
 	&& rm -rf /var/lib/apt/lists/*
