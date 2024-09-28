@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:latest
+FROM --platform=linux/amd64 ubuntu:latest AS builder
 
 ENV GMP_VERSION=6.3.0 \
 	MPFR_VERSION=4.2.1 \
@@ -8,7 +8,7 @@ ENV GMP_VERSION=6.3.0 \
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update \
-	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git python3 xz-utils wget pkg-config default-jre \
+	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git xz-utils wget pkg-config \
 	&& mkdir -p ~/opt/src
 
 RUN	cd ~ \
@@ -59,3 +59,13 @@ RUN cd ~/opt/src \
 	&& cd ../libqalculate \
 	&& make \
 	&& make install
+
+FROM --platform=linux/amd64 ubuntu:latest
+
+COPY --from=builder /root/opt/include /usr/local/include
+COPY --from=builder /root/opt/lib /usr/local/lib
+COPY --from=builder /root/emsdk /root/emsdk
+
+RUN apt update \
+	&& apt install -y default-jre-headless python3 \
+	&& rm -rf /var/lib/apt/lists/*
