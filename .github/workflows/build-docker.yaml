@@ -34,6 +34,9 @@ jobs:
         with:
           images: ghcr.io/stephtr/libqalculate-wasm
 
+      - name: Set up Docker CLI
+        uses: docker/setup-buildx-action@v3
+
       - name: Build and push Docker images
         id: push
         uses: docker/build-push-action@v6
