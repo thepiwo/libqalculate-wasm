@@ -1,12 +1,31 @@
-FROM emscripten/emsdk:latest AS builder
+FROM --platform=linux/amd64 ubuntu:latest AS builder
 
 ENV GMP_VERSION=6.3.0 \
 	MPFR_VERSION=4.2.1 \
-	LIBXML2_VERSION=2.9.12
+	LIBXML2_VERSION=2.9.12 \
+	EM_VERSION=3.1.67 \
+	EM_NODE_VERSION=18.20.3_64bit
+
+ENV EMSDK /emsdk
 
 RUN apt update \
-	&& apt install -y lzip binutils autoconf intltool libtool automake lbzip2 lzip xz-utils pkg-config \
+	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git xz-utils wget pkg-config python3-minimal \
 	&& mkdir -p ~/opt/src
+
+RUN	cd / \
+	&& git clone https://github.com/juj/emsdk.git \
+	&& cd ${EMSDK} \
+	&& ./emsdk install ${EM_VERSION} \
+	&& ./emsdk activate ${EM_VERSION} \
+	&& . ./emsdk_env.sh \
+	# Remove debugging symbols from embedded node (extra 7MB)
+	&& strip -s `which node` \
+	# Tests consume ~80MB disc space
+	&& rm -fr ${EMSDK}/upstream/emscripten/tests \
+	# strip out symbols from clang (~extra 50MB disc space)
+	&& find ${EMSDK}/upstream/bin -type f -exec strip -s {} + || true
+
+ENV PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
 
 RUN cd ~/opt/src \
 	&& wget https://ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.lz \
@@ -47,7 +66,22 @@ RUN cd ~/opt/src \
 	&& make \
 	&& make install
 
-FROM emscripten/emsdk:latest
+FROM --platform=linux/amd64 ubuntu:latest
 
 COPY --from=builder /opt/include /opt/include
 COPY --from=builder /opt/lib /opt/lib
+COPY --from=builder /emsdk /emsdk
+
+ENV EMSDK /emsdk \
+	PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
+
+RUN apt update \
+	&& apt install -y --no-install-recommends default-jre-headless python3-minimal \
+	&& apt-get -y clean \
+	&& apt-get -y autoclean \
+	&& apt-get -y autoremove \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/cache/debconf/*-old \
+	&& rm -rf /usr/share/doc/* \
+	&& rm -rf /usr/share/man/?? \
+	&& rm -rf /usr/share/man/??_*
