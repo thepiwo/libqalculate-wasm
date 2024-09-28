@@ -4,8 +4,6 @@ ENV GMP_VERSION=6.3.0 \
 	MPFR_VERSION=4.2.1 \
 	LIBXML2_VERSION=2.9.12
 
-SHELL ["/bin/bash", "-c"]
-
 RUN apt update \
 	&& apt install -y lzip binutils autoconf intltool libtool automake lbzip2 lzip xz-utils pkg-config \
 	&& mkdir -p ~/opt/src
