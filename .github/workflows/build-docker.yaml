@@ -30,5 +30,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
+          tags: stephtr/libqalculate-wasm:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
