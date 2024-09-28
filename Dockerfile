@@ -53,14 +53,3 @@ FROM emscripten/emsdk:latest
 
 COPY --from=builder /opt/include /opt/include
 COPY --from=builder /opt/lib /opt/lib
-
-RUN apt update \
-	&& apt install -y --no-install-recommends default-jre-headless \
-	&& apt-get -y clean \
-	&& apt-get -y autoclean \
-	&& apt-get -y autoremove \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/cache/debconf/*-old \
-	&& rm -rf /usr/share/doc/* \
-	&& rm -rf /usr/share/man/?? \
-	&& rm -rf /usr/share/man/??_*
