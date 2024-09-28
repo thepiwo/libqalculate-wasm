@@ -1,0 +1,11 @@
+{
+  "name": "libqalculate-wasm",
+  "version": "0.0.1",
+  "description": "A WebAssembly wrapper for libqalculate",
+  "module": "true",
+  "keywords": [
+    "libqalculate"
+  ],
+  "author": "Stephan Troyer",
+  "license": "GPL-3.0-only"
+}
