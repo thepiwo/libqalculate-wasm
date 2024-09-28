@@ -53,7 +53,6 @@ FROM emscripten/emsdk:latest
 
 COPY --from=builder /opt/include /opt/include
 COPY --from=builder /opt/lib /opt/lib
-COPY --from=builder /emsdk /emsdk
 
 RUN apt update \
 	&& apt install -y --no-install-recommends default-jre-headless \
