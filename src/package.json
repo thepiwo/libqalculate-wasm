@@ -4,6 +4,7 @@
   "description": "A WebAssembly wrapper for libqalculate",
   "module": "true",
   "main": "libqalculate.js",
+  "homepage": "https://github.com/stephtr/libqalculate-wasm",
   "keywords": [
     "libqalculate"
   ],
