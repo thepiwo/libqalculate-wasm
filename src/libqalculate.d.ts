@@ -18,4 +18,4 @@ interface MainModule {
   updateCurrencyValues(currencyData: Array<{ name: string, value: string }>, baseCurrency: string, showWarning: boolean): boolean;
 }
 
-export default function MainModuleFactory(loadingOptions: any): Promise<MainModule>;
+export default function MainModuleFactory(loadingOptions?: any): Promise<MainModule>;
