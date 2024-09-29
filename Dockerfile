@@ -83,7 +83,7 @@ ENV EMSDK=/emsdk \
 	PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
 
 RUN apt update \
-	&& apt install -y --no-install-recommends default-jre-headless python3-minimal \
+	&& apt install -y --no-install-recommends default-jre-headless python3 \
 	&& apt-get -y clean \
 	&& apt-get -y autoclean \
 	&& apt-get -y autoremove \
