@@ -1,12 +1,16 @@
+ARG GMP_VERSION=6.3.0
+ARG MPFR_VERSION=4.2.1
+ARG LIBXML2_VERSION=2.9.12
+ARG EM_VERSION=3.1.67
+ARG EM_NODE_VERSION=18.20.3_64bit
+
 FROM --platform=linux/amd64 ubuntu:latest AS builder
 
-ENV GMP_VERSION=6.3.0 \
-	MPFR_VERSION=4.2.1 \
-	LIBXML2_VERSION=2.9.12 \
-	EM_VERSION=3.1.67 \
-	EM_NODE_VERSION=18.20.3_64bit
-
-ENV EMSDK /emsdk
+ARG GMP_VERSION
+ARG MPFR_VERSION
+ARG LIBXML2_VERSION
+ARG EM_VERSION
+ARG EM_NODE_VERSION
 
 RUN apt update \
 	&& apt install -y build-essential lzip binutils autoconf intltool libtool automake lbzip2 lzip git xz-utils wget pkg-config python3-minimal \
@@ -14,16 +18,16 @@ RUN apt update \
 
 RUN	cd / \
 	&& git clone https://github.com/juj/emsdk.git \
-	&& cd ${EMSDK} \
+	&& cd /emsdk \
 	&& ./emsdk install ${EM_VERSION} \
 	&& ./emsdk activate ${EM_VERSION} \
 	&& . ./emsdk_env.sh \
 	# Remove debugging symbols from embedded node (extra 7MB)
 	&& strip -s `which node` \
 	# Tests consume ~80MB disc space
-	&& rm -fr ${EMSDK}/upstream/emscripten/tests \
+	&& rm -fr /emsdk/upstream/emscripten/tests \
 	# strip out symbols from clang (~extra 50MB disc space)
-	&& find ${EMSDK}/upstream/bin -type f -exec strip -s {} + || true
+	&& find /emsdk/upstream/bin -type f -exec strip -s {} + || true
 
 ENV PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
 
@@ -68,11 +72,13 @@ RUN cd ~/opt/src \
 
 FROM --platform=linux/amd64 ubuntu:latest
 
+ARG EM_NODE_VERSION
+
 COPY --from=builder /opt/include /opt/include
 COPY --from=builder /opt/lib /opt/lib
 COPY --from=builder /emsdk /emsdk
 
-ENV EMSDK /emsdk \
+ENV EMSDK=/emsdk \
 	EM_NODE_VERSION=18.20.3_64bit \
 	PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
 
