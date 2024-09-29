@@ -73,6 +73,7 @@ COPY --from=builder /opt/lib /opt/lib
 COPY --from=builder /emsdk /emsdk
 
 ENV EMSDK /emsdk \
+	EM_NODE_VERSION=18.20.3_64bit \
 	PATH="/emsdk:/emsdk/upstream/emscripten:/emsdk/node/${EM_NODE_VERSION}/bin:${PATH}"
 
 RUN apt update \
