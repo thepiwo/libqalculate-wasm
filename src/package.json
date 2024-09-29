@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A WebAssembly wrapper for libqalculate",
   "module": "true",
+  "main": "libqalculate.js",
   "keywords": [
     "libqalculate"
   ],
