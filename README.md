@@ -127,7 +127,7 @@ aliases: string[];
 set_option(str: string): boolean;
 ```
 
-## Usage example with React & support for Server Components
+## Usage example with React & compatibility with SSR
 
 ```TSX
 'use client';
@@ -143,7 +143,6 @@ const libqalculatePromise = typeof window !== 'undefined' ? loadLibqalculate({
 
 export function Calculator() {
     const [input, setInput] = useState('');
-    const [latexInput, setLatexInput] = useState('');
     const libqalculate = use(libqalculatePromise);
 
     const calculation = input ? libqalculate?.calculate(input, 0, 0) : null;
