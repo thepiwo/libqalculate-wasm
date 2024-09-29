@@ -1,4 +1,5 @@
 src/libqalculate.wasm
 src/libqalculate.js
+src/README.md
 
 .DS_Store

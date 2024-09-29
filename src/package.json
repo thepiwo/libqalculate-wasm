@@ -1,13 +1,17 @@
 {
   "name": "libqalculate-wasm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A WebAssembly wrapper for libqalculate",
   "module": "true",
   "main": "libqalculate.js",
+  "types": "src/libqalculate.d.ts",
   "homepage": "https://github.com/stephtr/libqalculate-wasm",
   "keywords": [
     "libqalculate"
   ],
+  "scripts": {
+    "prepublishOnly": "cp ../README.md ."
+  },
   "author": "Stephan Troyer",
   "license": "GPL-3.0-only"
 }
