@@ -127,7 +127,35 @@ aliases: string[];
 set_option(str: string): boolean;
 ```
 
-This function is responsible for
+## Usage example with React & support for Server Components
+
+```TSX
+'use client';
+
+import { use, useState } from 'react';
+import loadLibqalculate from 'libqalculate-wasm';
+
+// Since it's interactive, let's not load libqalculate during SSR.
+const libqalculatePromise = typeof window !== 'undefined' ? loadLibqalculate({
+    // important: libqalculate.wasm has to be copied to the public folder
+    locateFile: (path: string) => `/${path}`, // Absolute URL
+}) : Promise.resolve(null);
+
+export function Calculator() {
+    const [input, setInput] = useState('');
+    const [latexInput, setLatexInput] = useState('');
+    const libqalculate = use(libqalculatePromise);
+
+    const calculation = input ? libqalculate?.calculate(input, 0, 0) : null;
+    const plotDataset = calculation?.plotData ? processPlotData(calculation.plotData) : null;
+    return (
+        <div>
+            <input title="Calculation" className="border-gray-600 border-2" value={input} onChange={(e) => setInput(e.currentTarget.value)} />
+            {calculation && <div><span dangerouslySetInnerHTML={{ __html: calculation.input }} /> = <span dangerouslySetInnerHTML={{ __html: calculation.output }} /></div>}
+        </div>
+    );
+}
+```
 
 ## Development
 
