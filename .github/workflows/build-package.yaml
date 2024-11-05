@@ -26,3 +26,21 @@ jobs:
 
       - name: Compile WebAssembly
         run: ./build-wasm.sh
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: src
+
+      - name: Pack package
+        run: pnpm pack
+        working-directory: src
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: src/libqalculate-wasm-*.tgz
