@@ -58,10 +58,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: libqalculate-wasm
-          path: dist/
 
       - name: Publish package
         run: npm publish
-        working-directory: dist
+        working-directory: package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
