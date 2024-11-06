@@ -10,7 +10,7 @@
     "libqalculate"
   ],
   "scripts": {
-    "prepublishOnly": "cp ../README.md ."
+    "prepack": "cp ../README.md ."
   },
   "author": "Stephan Troyer",
   "license": "GPL-3.0-only",
