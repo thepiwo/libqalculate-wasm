@@ -1,6 +1,6 @@
 # Changelog
 
-### 0.0.2–0.0.4
+### 0.0.2–0.0.5
 Small bug fixes & documentation updates
 
 ### 0.0.1
