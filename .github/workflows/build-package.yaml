@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - "/build-wasm.sh"
-      - "/src/**"
+      - "build-wasm.sh"
+      - "src/**"
   release:
     types: [created]
 
@@ -54,7 +54,7 @@ jobs:
           path: package/**
 
   publish:
-#    if: github.event_name == 'release'
+    if: github.event_name == 'release'
     needs: build
     runs-on: ubuntu-latest
     permissions:
