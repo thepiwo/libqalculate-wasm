@@ -13,5 +13,9 @@
     "prepublishOnly": "cp ../README.md ."
   },
   "author": "Stephan Troyer",
-  "license": "GPL-3.0-only"
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephtr/libqalculate-wasm"
+  }
 }
