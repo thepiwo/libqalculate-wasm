@@ -1,10 +1,10 @@
 {
   "name": "libqalculate-wasm",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A WebAssembly wrapper for libqalculate",
   "module": "true",
   "main": "libqalculate.js",
-  "types": "src/libqalculate.d.ts",
+  "types": "libqalculate.d.ts",
   "homepage": "https://github.com/stephtr/libqalculate-wasm",
   "keywords": [
     "libqalculate"
