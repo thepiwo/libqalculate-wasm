@@ -29,8 +29,8 @@ const result = libqalculate.calculate(
 document.getElementById("result").innerHTML = result.output;
 ```
 
-`loadLibqalculate` loads the ~5 MB large WebAssembly file, which is included in the node module but must be served on the webserver.
-One way to achieve that, is to copy it into your public folder during package installation, by adding the following to your `package.json` file:
+`loadLibqalculate` loads the ~5 MB large WebAssembly file, which is included in the node_modules folder but must be served on the webserver.
+One way to achieve that is to copy it into your public folder during package installation, by adding the following to your `package.json` file:
 
 ```JSON
 {
