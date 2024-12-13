@@ -11,6 +11,11 @@ PrintOptions printops;
 
 val lastPlotData;
 
+void setPrecision(int precision)
+{
+	CALCULATOR->setPrecision(precision);
+}
+
 val calculate(std::string calculation, int timeout = 500, int optionFlags = 0)
 {
 	CALCULATOR->clearMessages();
@@ -161,6 +166,7 @@ bool qalc_invoke_gnuplot(
 EMSCRIPTEN_BINDINGS(Calculator)
 {
 	function("calculate", &calculate);
+	function("setPrecision", &setPrecision);
 	function("info", &info);
 	function("version", &version);
 	function("getVariables", &getVariables);

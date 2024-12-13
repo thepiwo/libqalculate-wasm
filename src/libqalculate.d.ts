@@ -24,6 +24,12 @@ interface MainModule {
    */
   calculate(calculation: string, timeout: number, optionFlags: number): CalculationResult;
 
+   /**
+   * Sets the calculation precision.
+   * @param precision new calculation precision
+   */
+  setPrecision(precision: number): void;
+
   /**
    * Provide libqalculate with new exchange rates.
    * @param currencyData The exchange rates; for example: [{ name: 'USD', value: 1.2345 }] => 1 USD = 1.2345 EUR
