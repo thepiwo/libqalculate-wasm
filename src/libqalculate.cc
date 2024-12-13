@@ -19,7 +19,7 @@ val calculate(std::string calculation, int timeout = 500, int optionFlags = 0)
 	calculation = CALCULATOR->unlocalizeExpression(calculation, evalops.parse_options);
 	std::string parsed_str;
 	bool resultIsComparison;
-	auto result = CALCULATOR->calculateAndPrint(calculation, timeout, evalops, printops, AUTOMATIC_FRACTION_AUTO, AUTOMATIC_APPROXIMATION_AUTO, &parsed_str, -1, &resultIsComparison, true, 2, TAG_TYPE_HTML);
+	auto result = CALCULATOR->calculateAndPrint(calculation, timeout, evalops, printops, &parsed_str);
 
 	val ret = val::object();
 	ret.set("input", parsed_str);
@@ -117,11 +117,12 @@ int main()
 {
 	new Calculator();
 	CALCULATOR->loadGlobalDefinitions();
-	printops.use_unicode_signs = true;
+	printops.use_unicode_signs = false;
 	printops.interval_display = INTERVAL_DISPLAY_SIGNIFICANT_DIGITS;
-	printops.base_display = BASE_DISPLAY_NORMAL;
-	printops.digit_grouping = DIGIT_GROUPING_STANDARD;
+	printops.base_display = BASE_DISPLAY_NONE;
+	printops.digit_grouping = DIGIT_GROUPING_NONE;
 	printops.indicate_infinite_series = true;
+	printops.exp_display = EXP_LOWERCASE_E;
 	evalops.parse_options.angle_unit = ANGLE_UNIT_RADIANS;
 	evalops.parse_options.unknowns_enabled = false;
 	return 0;
